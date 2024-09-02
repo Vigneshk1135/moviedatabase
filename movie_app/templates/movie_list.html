@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie List</title>
+    <!-- Add Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for overall page */
+        }
+
+        .navbar {
+            background-color: #e60000; /* Red background for the navbar */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important; /* White text for navbar items */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #e60000; /* Red color for main heading */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #ffffff; /* White card background */
+            border: none; /* Remove default border */
+            border-radius: 10px; /* Rounded corners for cards */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card */
+            transition: transform 0.2s; /* Smooth hover effect */
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Lift card on hover */
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-style: italic;
+            color: #666; /* Light grey for category text */
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-container input,
+        .search-container select {
+            max-width: 200px; /* Set smaller size for search and category dropdown */
+        }
+
+        .search-container .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Movie Database</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><strong>Movie List</strong></h1>
+
+        <!-- Compact Search and Add Movie Form -->
+        <div class="search-container">
+            <form method="get" class="d-flex">
+                <input type="text" id="q" name="q" class="form-control" placeholder="Search...">
+                <select id="category" name="category" class="form-control">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-danger">Search</button>
+            </form>
+            <a href="{% url 'add_movie' %}" class="btn btn-danger">Add Movie</a>
+        </div>
+
+        <!-- Movie Cards -->
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.name }}</h5>
+                            <p class="card-text">{{ movie.category.name }}</p>
+                            <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-success">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS for optional functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

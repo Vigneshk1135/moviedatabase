@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light grey background */
+            color: #333; /* Dark text for readability */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #e60000; /* Red background for the header */
+            color: #ffffff; /* White text */
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for the main content */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+         h2 {
+            color: #e60000; /* Red color for headings */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .btn-custom {
+            background-color: #e60000; /* Red background for buttons */
+            color: #ffffff; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .btn-custom:hover {
+            background-color: #c30000; /* Darker red on hover */
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .back-link {
+            color: #e60000; /* Red color for the back link */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1><strong>User Profile</strong></h1>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <div class="profile-info">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+        </div>
+
+        <!-- Edit Profile Link -->
+        <p>
+            <a href="{% url 'edit_user_profile' %}" class="btn-custom">Edit Profile</a>
+        </p>
+
+<!--        <h2>Reviews:</h2>-->
+<!--        {% if user.reviews.all %}-->
+<!--            <ul>-->
+<!--                {% for review in user.reviews.all %}-->
+<!--                    <li>-->
+<!--                        <strong>{{ review.movie.name }} ({{ review.movie.release_date }})</strong> - -->
+<!--                        {{ review.rating }}/5 - {{ review.review }}-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--        {% else %}-->
+<!--            <p>No reviews yet.</p>-->
+<!--        {% endif %}-->
+
+        <!-- Back Link to Movie List -->
+        <a href="{% url 'movie_list' %}" class="back-link">Back to Movie List</a>
+    </div>
+</body>
+</html>
